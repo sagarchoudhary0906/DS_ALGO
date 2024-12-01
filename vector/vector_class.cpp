@@ -10,14 +10,14 @@ class Vector
 
 public:
     // Constructor
-    Vector()
+    Vector(int maxSize = 1)
     {
         curr_size = 0;
-        max_size = 1;
+        max_size = maxSize;
         arr = new int[max_size];
     };
 
-    void push_back(int data)
+    void push_back(const int data)
     {
         if (curr_size == max_size)
         {
@@ -38,7 +38,7 @@ public:
         curr_size++;
     }
 
-    void pop_back()
+    void pop_back() 
     {
         if (curr_size > 0)
         {
@@ -46,12 +46,12 @@ public:
         }
     }
 
-    bool isEmpty()
+    bool isEmpty() const
     {
         return curr_size == 0;
     }
 
-    void printVector()
+    void printVector() const
     {
         for (int i = 0; i < curr_size; i++)
         {
@@ -60,20 +60,37 @@ public:
         cout << endl;
     }
 
-    int size()
+    int size() const
     {
         return curr_size;
     }
 
-    int capacity()
+    int capacity() const
     {
         return max_size;
+    }
+
+    int front() const {
+        return arr[0];
+    }
+
+    int last() const{
+        return arr[curr_size - 1];
+    }
+
+    int at(int index) const{
+        return arr[index];
+    }
+
+    // Operator overloading
+    int operator[] (const int i) {
+        return arr[i];
     }
 };
 
 int main()
 {
-    Vector v = Vector();
+    Vector v = Vector(1);
     cout << "Is Empty " << v.isEmpty() << endl;
     v.push_back(1);
     cout << "Is Empty " << v.isEmpty() << endl;
@@ -92,5 +109,9 @@ int main()
     cout << "Size of vector is =  " << v.size() << endl;
     cout << "Capcity of vector is =  " << v.capacity() << endl;
     v.printVector();
+    cout << "Front element = " << v.front() << endl;
+    cout << "Last element = " << v.last() << endl;
+    cout << "Element at index = " << v.at(5) << endl;
+    cout << "Operator overloading element at index 5 is = " << v[5] << endl;
     return 0;
 }
