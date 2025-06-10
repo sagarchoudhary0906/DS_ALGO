@@ -21,8 +21,6 @@
 #include <iostream>
 using namespace std;
 
-
-
 class Node
 {
 public:
@@ -51,6 +49,7 @@ public:
         this->tail = NULL;
     }
 
+    // Puhsing Forwrad in a linked list
     void pushForward(int data)
     {
         Node *newNode = new Node(data);
@@ -67,6 +66,23 @@ public:
         }
     }
 
+    // Puhsing BackWard in a Linked List
+    void pushBackward(int data)
+    {
+        Node *newNode = new Node(data);
+        if (head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
     void printLinkedList()
     {
         Node *tempNode = head;
@@ -75,11 +91,10 @@ public:
         {
             int data = tempNode->data;
             Node *nextNode = tempNode->next;
-            cout << data << "(" << nextNode << ")" << " -> ";
+            cout << data << " -> ";
             tempNode = nextNode;
         }
         cout << endl;
-        cout << "Printing Head Data now -> " << head->data;
     }
 };
 
@@ -91,6 +106,13 @@ int main()
     linkedList.pushForward(3);
     linkedList.pushForward(2);
     linkedList.pushForward(1);
+
+    linkedList.pushBackward(6);
+    linkedList.pushBackward(7);
+    linkedList.pushBackward(8);
+    linkedList.pushBackward(9);
+    linkedList.pushBackward(10);
+
     linkedList.printLinkedList();
     return 0;
 }
