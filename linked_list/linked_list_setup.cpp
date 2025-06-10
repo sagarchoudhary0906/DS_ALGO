@@ -88,6 +88,40 @@ public:
         }
     }
 
+    void pushAtPost(int pos, int data) {
+        pos = pos - 1;
+
+        if (pos == 0 && head != NULL) {
+            Node *newNode = new Node(data);
+            Node *nextNode = head;
+            newNode->next = nextNode;
+            head = newNode;
+            return;
+        }
+
+        Node *tempNode = head;
+        while (tempNode != NULL && pos >= 1) {
+            if (pos == 1)
+            {
+                // Adding Node to the desired position
+                Node *newNode = new Node(data);
+                Node *nextNode = tempNode->next;
+                newNode->next = nextNode;
+                tempNode->next = newNode;
+                return;
+            }
+            pos = pos - 1;
+            tempNode = tempNode->next;
+        }
+
+        if (tempNode == NULL && pos > 1) {
+            cout << "Node can't be entered at the desired position as there are not such number of elemnts present hence pushing the node at the back of the linked list" << endl;
+            Node *newNode = new Node(data);
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
     // Print the entire linked list
     void printLinkedList()
     {
@@ -106,7 +140,7 @@ public:
 
 int main()
 {
-    LinkedList linkedList = LinkedList();
+    LinkedList linkedList;
 
     // Insert nodes at the front
     linkedList.pushForward(5);
@@ -121,6 +155,11 @@ int main()
     linkedList.pushBackward(8);
     linkedList.pushBackward(9);
     linkedList.pushBackward(10);
+
+    //Pushing Element at particular position in linked list
+    linkedList.pushAtPost(1, -3);
+    linkedList.pushAtPost(1, -1);
+    linkedList.pushAtPost(20, 20);
 
     // Print the linked list
     linkedList.printLinkedList();
