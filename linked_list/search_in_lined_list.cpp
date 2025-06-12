@@ -19,10 +19,11 @@ public:
 // LinkedList class: Manages the entire linked list
 class LinkedList
 {
+
+public:
     Node *head; // Pointer to the first node (head)
     Node *tail; // Pointer to the last node (tail)
 
-public:
     // Constructor: Initializes head and tail to NULL
     LinkedList()
     {
@@ -121,6 +122,7 @@ public:
         cout << endl;
     }
 
+    // This is a linear search
     bool searchInLinkedList(int key)
     {
         Node *tempNode = head;
@@ -133,6 +135,20 @@ public:
             tempNode = tempNode->next;
         }
         return false;
+    }
+
+    // Recursive Search Approach
+    bool recursiveSearchInLinkedList(int key, Node *tempNode)
+    {
+        if (tempNode == NULL)
+        {
+            return false;
+        }
+        if (tempNode->data == key)
+        {
+            return true;
+        }
+        return recursiveSearchInLinkedList(key, tempNode->next);
     }
 };
 
@@ -158,5 +174,7 @@ int main()
     linkedList.printLinkedList();
 
     cout << "Key 20 is present in linked list = " << linkedList.searchInLinkedList(20);
+    cout << endl;
+    cout << "Recursive Search result for key 3 = " << linkedList.recursiveSearchInLinkedList(3, linkedList.head);
     return 0;
 };
