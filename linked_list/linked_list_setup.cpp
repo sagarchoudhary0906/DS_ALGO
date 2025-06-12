@@ -25,8 +25,8 @@ using namespace std;
 class Node
 {
 public:
-    int data;      // Data of the node
-    Node *next;    // Pointer to the next node
+    int data;   // Data of the node
+    Node *next; // Pointer to the next node
 
     // Constructor: Initializes data and sets next to NULL
     Node(int data)
@@ -34,13 +34,21 @@ public:
         this->data = data;
         this->next = NULL;
     }
+
+    ~Node()
+    {
+        if (next != NULL)
+        {
+            delete next;
+        }
+    }
 };
 
 // LinkedList class: Manages the entire linked list
 class LinkedList
 {
-    Node *head;    // Pointer to the first node (head)
-    Node *tail;    // Pointer to the last node (tail)
+    Node *head; // Pointer to the first node (head)
+    Node *tail; // Pointer to the last node (tail)
 
 public:
     // Constructor: Initializes head and tail to NULL
@@ -88,10 +96,12 @@ public:
         }
     }
 
-    void pushAtPost(int pos, int data) {
+    void pushAtPost(int pos, int data)
+    {
         pos = pos - 1;
 
-        if (pos == 0 && head != NULL) {
+        if (pos == 0 && head != NULL)
+        {
             Node *newNode = new Node(data);
             Node *nextNode = head;
             newNode->next = nextNode;
@@ -100,7 +110,8 @@ public:
         }
 
         Node *tempNode = head;
-        while (tempNode != NULL && pos >= 1) {
+        while (tempNode != NULL && pos >= 1)
+        {
             if (pos == 1)
             {
                 // Adding Node to the desired position
@@ -114,7 +125,8 @@ public:
             tempNode = tempNode->next;
         }
 
-        if (tempNode == NULL && pos > 1) {
+        if (tempNode == NULL && pos > 1)
+        {
             cout << "Node can't be entered at the desired position as there are not such number of elemnts present hence pushing the node at the back of the linked list" << endl;
             Node *newNode = new Node(data);
             tail->next = newNode;
@@ -136,6 +148,43 @@ public:
         }
         cout << endl;
     }
+
+    ~LinkedList()
+    {
+        if (head != NULL)
+        {
+            delete head;
+        }
+    }
+
+     /**
+     * Function to delete the first node (head) from the linked list and shift the head to the next node.
+     * 
+     * Example:
+     * Suppose the linked list is:  10 -> 20 -> 30 -> 40
+     * After calling popFront(), the list becomes: 20 -> 30 -> 40
+     * 
+     * Step-by-step:
+     * 1. Store the current head node in a temporary pointer (tempNode).
+     * 2. Move the head pointer to the next node (head = head->next).
+     * 3. Disconnect the tempNode from the list (tempNode->next = NULL).
+     * 4. Delete tempNode to free memory.
+     * 
+     * If the list is already empty (head == NULL), print a message and do nothing.
+     */
+    void popFront()
+    {
+        if (head == NULL)
+        {
+            cout << "Linekd LIst was already empty" << endl;
+            return;
+        }
+
+        Node *tempNode = head;
+        head = head->next;
+        tempNode->next = NULL;
+        delete tempNode;
+    }
 };
 
 int main()
@@ -156,12 +205,19 @@ int main()
     linkedList.pushBackward(9);
     linkedList.pushBackward(10);
 
-    //Pushing Element at particular position in linked list
+    // Pushing Element at particular position in linked list
     linkedList.pushAtPost(1, -3);
     linkedList.pushAtPost(1, -1);
     linkedList.pushAtPost(20, 20);
 
     // Print the linked list
+    linkedList.printLinkedList();
+
+    linkedList.popFront();
+    linkedList.popFront();
+    linkedList.popFront();
+    linkedList.popFront();
+    cout << endl;
     linkedList.printLinkedList();
     return 0;
 }
