@@ -231,6 +231,32 @@ public:
         }
     }
 
+    /**
+     * Function to reverse a singly linked list in linear time (O(n)).
+     *
+     * Example:
+     * Original List:  1 -> 2 -> 3 -> 4 -> 5
+     * After reverse:  5 -> 4 -> 3 -> 2 -> 1
+     *
+     * Step-by-step explanation:
+     * - We use three pointers:
+     *     1. tn (tempNode): Traverses the list.
+     *     2. cn (currentNode): Points to the current node being processed.
+     *     3. pn (prevNode): Points to the previous node (initially NULL).
+     * - For each node:
+     *     a. Store the current node in cn.
+     *     b. Move tn to the next node.
+     *     c. Reverse the link: cn->next = pn.
+     *     d. Move pn to cn (advance prevNode).
+     * - After the loop, set head = cn (which will be the new head).
+     *
+     * Visual Example:
+     * Iteration 1: 1->2, pn=NULL, cn=1, tn=2
+     *     1->NULL, pn=1, cn=2, tn=2
+     * Iteration 2: 2->3, pn=1, cn=2, tn=3
+     *     2->1, pn=2, cn=3, tn=3
+     * ... and so on, until the list is fully reversed.
+     */
     void reverseALinkedListLienarly() {
         Node *tn = head;
         Node *cn = tn;
