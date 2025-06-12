@@ -47,10 +47,10 @@ public:
 // LinkedList class: Manages the entire linked list
 class LinkedList
 {
-    Node *head; // Pointer to the first node (head)
-    Node *tail; // Pointer to the last node (tail)
 
 public:
+    Node *head; // Pointer to the first node (head)
+    Node *tail; // Pointer to the last node (tail)
     // Constructor: Initializes head and tail to NULL
     LinkedList()
     {
@@ -157,19 +157,19 @@ public:
         }
     }
 
-     /**
+    /**
      * Function to delete the first node (head) from the linked list and shift the head to the next node.
-     * 
+     *
      * Example:
      * Suppose the linked list is:  10 -> 20 -> 30 -> 40
      * After calling popFront(), the list becomes: 20 -> 30 -> 40
-     * 
+     *
      * Step-by-step:
      * 1. Store the current head node in a temporary pointer (tempNode).
      * 2. Move the head pointer to the next node (head = head->next).
      * 3. Disconnect the tempNode from the list (tempNode->next = NULL).
      * 4. Delete tempNode to free memory.
-     * 
+     *
      * If the list is already empty (head == NULL), print a message and do nothing.
      */
     void popFront()
@@ -184,6 +184,51 @@ public:
         head = head->next;
         tempNode->next = NULL;
         delete tempNode;
+    }
+
+    Node *deleteTailRecursively(Node *head)
+    {
+        if (head == NULL)
+        {
+            return NULL;
+        }
+
+        if (head->next != NULL)
+        {
+            Node *tempNode = deleteTailRecursively(head->next);
+            if (tempNode == NULL) {
+                head->next = NULL;
+            }
+            return head;
+        }
+        else
+        {
+            cout << "Deleting Tail Node with data = " << head->data<< endl;
+            delete head;
+            return NULL;
+        }
+    }
+
+    void deleteTailLinearly() {
+        if (head == NULL) {
+            cout << "Linekd List is already empty" << endl;
+            return;
+        }
+
+        Node *tempNode = head;
+        Node *secondLastNode = head;
+        while (tempNode != NULL)
+        {
+            if (tempNode->next == NULL)
+            {
+                cout << "deleting last node with data = " << tempNode->data;
+                secondLastNode->next = NULL;
+                delete tempNode;
+                break;
+            }
+            secondLastNode = tempNode;
+            tempNode = tempNode->next;
+        }
     }
 };
 
@@ -218,6 +263,17 @@ int main()
     linkedList.popFront();
     linkedList.popFront();
     cout << endl;
+    linkedList.printLinkedList();
+    cout << endl;
+    linkedList.deleteTailRecursively(linkedList.head);
+    cout << endl;
+    cout << "LinkedList Post Deletion" << endl;
+    linkedList.printLinkedList();
+
+    cout << endl;
+    linkedList.deleteTailLinearly();
+    cout << endl;
+    cout << "LinkedList Post Linear Deletion" << endl;
     linkedList.printLinkedList();
     return 0;
 }
