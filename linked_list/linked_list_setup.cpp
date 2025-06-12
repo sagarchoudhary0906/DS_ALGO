@@ -196,21 +196,24 @@ public:
         if (head->next != NULL)
         {
             Node *tempNode = deleteTailRecursively(head->next);
-            if (tempNode == NULL) {
+            if (tempNode == NULL)
+            {
                 head->next = NULL;
             }
             return head;
         }
         else
         {
-            cout << "Deleting Tail Node with data = " << head->data<< endl;
+            cout << "Deleting Tail Node with data = " << head->data << endl;
             delete head;
             return NULL;
         }
     }
 
-    void deleteTailLinearly() {
-        if (head == NULL) {
+    void deleteTailLinearly()
+    {
+        if (head == NULL)
+        {
             cout << "Linekd List is already empty" << endl;
             return;
         }
@@ -257,17 +260,99 @@ public:
      *     2->1, pn=2, cn=3, tn=3
      * ... and so on, until the list is fully reversed.
      */
-    void reverseALinkedListLienarly() {
+    void reverseALinkedListLienarly()
+    {
         Node *tn = head;
         Node *cn = tn;
         Node *pn = NULL;
-        while (tn != NULL) {
+        while (tn != NULL)
+        {
             cn = tn;
             tn = tn->next;
             cn->next = pn;
             pn = cn;
         }
         head = cn;
+    }
+
+    int sizeOfLinekdList()
+    {
+        Node *tn = head;
+        int count = 0;
+        while (tn != NULL)
+        {
+            count++;
+            tn = tn->next;
+        }
+        return count;
+    }
+
+    int kthLastElement(int k)
+    {
+        if (head == NULL)
+        {
+            return -1;
+        }
+        int size = sizeOfLinekdList();
+        int indexForKthElementFromStart = size - k + 1;
+        int kthElemnt = -1;
+        Node *tn = head;
+        while (tn != NULL)
+        {
+            if (indexForKthElementFromStart == 0)
+            {
+                break;
+            }
+            kthElemnt = tn->data;
+            tn = tn->next;
+            indexForKthElementFromStart = indexForKthElementFromStart - 1;
+        }
+        return kthElemnt;
+    }
+
+
+    /**
+     * Function to find the kth last element of a singly linked list using the two-pointer technique.
+     *
+     * Example:
+     * List: 10 -> 20 -> 30 -> 40 -> 50
+     * k = 2
+     * kth last element = 40 (2nd from the end)
+     *
+     * Detailed Explanation:
+     * - We use two pointers: 'fast' and 'slow', both starting at the head.
+     * - First, move the 'fast' pointer k steps ahead in the list.
+     *   (So there is a gap of k nodes between 'fast' and 'slow')
+     * - Then, move both 'fast' and 'slow' one step at a time until 'fast' reaches the end (NULL).
+     * - At this point, 'slow' will be at the kth last node.
+     *
+     * Why does this work?
+     * - When 'fast' is k nodes ahead and reaches the end, 'slow' is exactly k nodes from the end.
+     * - This method only requires one traversal (O(n) time, O(1) space).
+     *
+     * Edge Cases:
+     * - If k is greater than the length of the list, this function will cause a null pointer access.
+     *   (You may want to add a check for robustness.)
+     */
+    int kthLastElementTwoPointer(Node *head, int k)
+    {
+        Node *fast = head;
+        Node *slow = head;
+
+        int cnt = 0;
+        while (cnt < k)
+        {
+            fast = fast->next;
+            cnt++;
+        }
+
+        while (fast != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+        return slow->data;
     }
 };
 
@@ -319,5 +404,9 @@ int main()
     linkedList.reverseALinkedListLienarly();
     linkedList.printLinkedList();
     cout << endl;
+
+    cout << "5th element from last = " << linkedList.kthLastElement(5) << endl;
+
+    cout << linkedList.kthLastElementTwoPointer(linkedList.head, 5) << endl;
     return 0;
 }
