@@ -230,6 +230,19 @@ public:
             tempNode = tempNode->next;
         }
     }
+
+    void reverseALinkedListLienarly() {
+        Node *tn = head;
+        Node *cn = tn;
+        Node *pn = NULL;
+        while (tn != NULL) {
+            cn = tn;
+            tn = tn->next;
+            cn->next = pn;
+            pn = cn;
+        }
+        head = cn;
+    }
 };
 
 int main()
@@ -275,5 +288,10 @@ int main()
     cout << endl;
     cout << "LinkedList Post Linear Deletion" << endl;
     linkedList.printLinkedList();
+
+    cout << "Reversing a linked list now " << endl;
+    linkedList.reverseALinkedListLienarly();
+    linkedList.printLinkedList();
+    cout << endl;
     return 0;
 }
