@@ -354,6 +354,23 @@ public:
 
         return slow->data;
     }
+
+    void swapLinkedListFirstTwoNodes() {
+        Node *firstNode = head;
+        Node *secondNode = head->next;
+        cout << endl;
+        cout << "---------" << endl;
+        cout << firstNode->data << " " << secondNode->data << endl;
+
+        // Swapping Now
+        Node* tempNode = secondNode;
+        Node *tempNodeNext = tempNode->next;
+        secondNode = firstNode;
+        firstNode = tempNode;
+        firstNode->next = secondNode;
+        secondNode->next = tempNodeNext;
+        head = firstNode;
+    }
 };
 
 int main()
@@ -408,5 +425,11 @@ int main()
     cout << "5th element from last = " << linkedList.kthLastElement(5) << endl;
 
     cout << linkedList.kthLastElementTwoPointer(linkedList.head, 5) << endl;
+
+    //Swapping
+    linkedList.swapLinkedListFirstTwoNodes();
+    cout << endl;
+    linkedList.printLinkedList();
+    cout << endl;
     return 0;
 }
